@@ -1,7 +1,7 @@
 const mqtt = require("mqtt");
 
 const BROKER_URL = "mqtt://broker.hivemq.com";
-const TOPIC = "jaliko/smart-energy/energy/data";
+const TOPIC = "smart-basket/smart-laundry-basket/energy/data";
 
 const client = mqtt.connect(BROKER_URL, {
   connectTimeout: 10_000,
