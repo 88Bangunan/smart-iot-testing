@@ -15,11 +15,23 @@ client.on("connect", () => {
   console.log("✅ Sensor connected to MQTT broker:", BROKER_URL);
 
   setInterval(() => {
-    const payload = {
-      deviceId: "sensor-001",
-      watt: Math.floor(Math.random() * 1000) + 1, // 1..1000
-      timestamp: new Date().toISOString(),
-    };
+    const payload = [
+      {
+        deviceId: "DHT11",
+        humidity: Math.floor(Math.random() * 100) + 1, // 1..100
+        timestamp: new Date().toISOString(),
+      },
+      {
+        deviceId: "HX711",
+        weight: Number(Math.round((Math.random() * 10)).toFixed(2)),
+        timestamp: new Date().toISOString()
+      },
+      {
+        deviceId: "MQ-135",
+        gas: Math.floor(Math.random() * 5000) + 1,
+        timestamp: new Date().toISOString()
+      }
+    ];
 
     const message = JSON.stringify(payload);
 

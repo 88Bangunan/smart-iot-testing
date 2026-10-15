@@ -22,6 +22,21 @@ client.on("connect", () => {
 
 client.on("message", (topic, message) => {
   console.log("📥 Received:", message.toString());
+
+  const payloads = JSON.parse(message.toString())
+  const humidityData = payloads.find(data => data.deviceId === "DHT11")
+  const weightData = payloads.find(data => data.deviceId === "HX711")
+  const gasData = payloads.find(data => data.deviceId === "MQ-135")
+
+  let displayMessage = "Continue Monitoring";
+  if(humidityData.humidity > 50 && weightData.weight > 4.5 && gasData.gas > 2045) {
+    displayMessage = "⚠️ Laundry Required ⚠️"
+  }
+
+  console.log(displayMessage)
+  
+
 });
 
 client.on("error", (err) => console.error("❌ MQTT error:", err.message));
+ 
