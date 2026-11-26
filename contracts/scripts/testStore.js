@@ -1,14 +1,19 @@
 const hre = require("hardhat");
 
 async function main() {
-  const CONTRACT_ADDRESS = "PASTE_DEPLOYED_ADDRESS_HERE";
+  const CONTRACT_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
 
   const energyData = await hre.ethers.getContractAt("EnergyData", CONTRACT_ADDRESS);
 
-  const deviceId = "sensor-001";
-  const hash = "5ef10b04607b84cbc14a9d379a5b18208d2122c9d3e4991fec7a8ef7278753b0";
+  const _deviceId = "DHT11";
+  const _humidity = "60";
+  const _weight = "15.5";
+  const _gas = "120";
+  const hash =
+    "467fd95471005594ea74d83b953625dbe8a1d759fd934cfd2d6d3389cfa3f677";
+  
 
-  const tx = await energyData.storeData(deviceId, hash);
+  const tx = await energyData.storeData(_deviceId, _humidity, _weight, _gas, hash);
   console.log("⛓️ tx sent:", tx.hash);
 
   await tx.wait();
