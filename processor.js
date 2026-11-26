@@ -28,6 +28,11 @@ client.on("message", (topic, message) => {
     const data = JSON.parse(raw);
 
     let hash;
+
+    const humidity = data.find(sensor => sensor.deviceId === 'DHT11');
+    const weight = data.find(sensor => sensor.deviceId === 'HX711');
+    const gas = data.find(sensor => sensor.deviceId === 'MQ-135');
+
     const blockChainReadyPayload = data.map(sensor => {
       // Generate SHA256 hash
        hash = crypto
@@ -36,10 +41,25 @@ client.on("message", (topic, message) => {
         .digest("hex");
 
       //  Prepare payload for blockchain storage
+      if(sensor === humidity) return {
+        deviceId: sensor.deviceId,
+        humidity: sensor.humidity,
+        dataHash: hash,
+        receivedAt: new Date().toLocaleTimeString(),
+      }
+
+      if(sensor === weight) return {
+        deviceId: sensor.deviceId,
+        weight: sensor.weight,
+        dataHash: hash,
+        receivedAt: new Date().toLocaleTimeString(),
+      };
+
       return {
         deviceId: sensor.deviceId,
+        gas: sensor.gas,
         dataHash: hash,
-        receivedAt: new Date().toISOString()
+        receivedAt: new Date().toLocaleTimeString()
       }
     })
 
